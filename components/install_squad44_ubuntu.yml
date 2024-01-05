@@ -1,0 +1,107 @@
+name: InstallSquad44
+description: this document installs Squad44 on Ubuntu using LinuxGM
+schemaVersion: 1.0
+
+phases:
+  - name: build
+    steps:
+      - name: ConfigureUsers
+        action: ExecuteBash
+        timeoutSeconds: 5
+        onFailure: Abort
+        maxAttempts: 2
+        inputs:
+          commands:
+            - sudo adduser --disabled-password --gecos "" psserver
+            - sudo passwd -d psserver
+            - sudo usermod -aG playmasters psserver
+
+      - name: CreatingGameDirectory
+        action: CreateFolder
+        inputs:
+          - path: ./squad44
+            owner: psserver
+            group: playmasters
+            permissions: 0777
+
+      - name: DownloadServerScript
+        action: ExecuteBash
+        timeoutSeconds: 5
+        onFailure: Abort
+        maxAttempts: 2
+        inputs:
+          commands:
+            - sudo chown -R psserver:playmasters ./squad44/
+            - cd ./squad44/ && su -c 'wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh psserver' psserver
+
+      - name: CheckDiskSpace
+        action: ExecuteBash
+        timeoutSeconds: 2
+        onFailure: Continue
+        maxAttempts: 3
+        inputs:
+          commands:
+            - lsblk # lsblk -f -o NAME,FSTYPE,MOUNTPOINT,SIZE,FSAVAIL,FSUSED,FSUSED%
+            - df -h / # df -h / # df -h /home # df -h /var/lib/docker # df -h /mnt/data # df -h /mnt/data2 # df -h /mnt/data3 # df -h /mnt/data4 # df -h /mnt/data
+
+      - name: DownloadSquad44
+        action: ExecuteBash
+        timeoutSeconds: 1800 # 1800 seconds = 30 minutes
+        onFailure: Abort
+        maxAttempts: 1
+        inputs:
+          commands:
+            - cd ./squad44/ && su -c './psserver auto-install' psserver
+
+      - name: CheckDiskSpaceAgain
+        action: ExecuteBash
+        timeoutSeconds: 2
+        onFailure: Continue
+        maxAttempts: 3
+        inputs:
+          commands:
+            - lsblk # lsblk -f -o NAME,FSTYPE,MOUNTPOINT,SIZE,FSAVAIL,FSUSED,FSUSED%
+            - df -h / # df -h / # df -h /home # df -h /var/lib/docker # df -h /mnt/data # df -h /mnt/data2 # df -h /mnt/data3 # df -h /mnt/data4 # df -h /mnt/data
+
+      - name: CreateService
+        action: CreateFile
+        timeoutSeconds: 2
+        onFailure: Abort
+        maxAttempts: 1
+        inputs:
+          - path: /etc/systemd/system/squad44.service
+            content: |
+                [Unit]
+                Description=Squad44 dedicated server
+                After=network.target
+
+                [Service]
+                ExecStart=/playmaster/squad44/psserver start
+                ExecReload=/playmaster/squad44/psserver restart
+                ExecStop=/playmaster/squad44/psserver stop
+                Type=exec
+                Restart=always
+
+                [Install]
+                WantedBy=multi-user.target
+            overwrite: true
+            encoding: utf8
+            permissions: 0777
+            owner: root
+            group: root
+                        
+      # - name: EnableService
+      #   action: ExecuteBash
+      #   timeoutSeconds: 2
+      #   onFailure: Abort
+      #   maxAttempts: 3
+      #   inputs:
+      #     commands:
+      #       - sudo systemctl enable squad44.service
+      #       - sudo systemctl status squad44.service
+
+
+
+
+
+

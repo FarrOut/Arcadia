@@ -1,0 +1,13 @@
+[Unit]
+Description=Squad44 dedicated server
+After=network.target
+
+[Service]
+ExecStart=/playmaster/squad44/psserver start
+ExecReload=/playmaster/squad44/psserver restart
+ExecStop=/playmaster/squad44/psserver stop
+Type=exec
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
