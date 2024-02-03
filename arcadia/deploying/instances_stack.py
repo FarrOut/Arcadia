@@ -92,7 +92,7 @@ class Instances(NestedStack):
                 "packaging": [],
                 "logging": ['install_cw_agent'],
                 "testing": [],
-                "sysadmin": ['awscli', "networking"],
+                "sysadmin": ["networking"],
                 'connectivity': ['install_mosh'],
             },
             configs={
@@ -253,5 +253,4 @@ class Instances(NestedStack):
                   )
 
         self.mosh_command = f"mosh --ssh=\"ssh -i {key_name}.pem\" {user}@{self.instance_public_name}"
-        self.mobaxterm_mosh_command = \
-            f"mobaxterm -newtab \"mosh --ssh=\\\"ssh -i {key_name}.pem\\\"\" {user}@{self.instance_public_name}"
+        self.mobaxterm_mosh_command =f"mobaxterm -newtab \"mosh --ssh=\\\"ssh -i {key_name}.pem\\\"\" {user}@{self.instance_public_name}"

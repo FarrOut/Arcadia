@@ -14,7 +14,7 @@ class ServerAuthorization(NestedStack):
                  **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        role = iam.Role(self, "Squad44ServerRole", role_name="Squad44ServerRole",
+        role = iam.Role(self, "ArcadiaServerRole", role_name="ArcadiaServerRole",
                         assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
         # role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
         #     "AmazonSSMManagedInstanceCore"))
@@ -24,8 +24,8 @@ class ServerAuthorization(NestedStack):
 
         # create an instance profile to attach the role
         self.instance_profile = iam.InstanceProfile(self,
-                                                    "Squad44ServerInstanceProfile",
-                                                    instance_profile_name="Squad44ServerInstanceProfile",
+                                                    "ArcadiaInstanceProfile",
+                                                    instance_profile_name="ArcadiaInstanceProfile",
                                                     role=role)
         self.instance_profile.apply_removal_policy(removal_policy)
 
@@ -34,7 +34,7 @@ class ServerAuthorization(NestedStack):
         CfnOutput(self, "InstanceProfileArn",
                   value=self.instance_profile.instance_profile_arn,)
 
-        self.security_group = ec2.SecurityGroup(self, "Squad44ServerSecurityGroup",
+        self.security_group = ec2.SecurityGroup(self, "ArcadiaSecurityGroup",
                                                 allow_all_outbound=True,
                                                 vpc=vpc,
                                                 )

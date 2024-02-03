@@ -32,7 +32,7 @@ class Server(Stack):
         # COMPUTING
 
         machine_image = ec2.MachineImage.lookup(
-            name='*squad44*', owners=[str(self.account)],
+            name='*tf2*', owners=[str(self.account)],
             filters={'architecture': ['x86_64']},
         )
 

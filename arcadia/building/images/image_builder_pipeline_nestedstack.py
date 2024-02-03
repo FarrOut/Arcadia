@@ -68,7 +68,7 @@ class ImageBuilderPipeline(NestedStack):
                                                  ebs=imagebuilder.CfnImageRecipe.EbsInstanceBlockDeviceSpecificationProperty(
                                                      delete_on_termination=True,
                                                      encrypted=False,
-                                                     volume_size=70,
+                                                     volume_size=17,
                                                      volume_type="gp3"
                                                  ),
                                                  virtual_name="see-drive"
