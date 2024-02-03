@@ -1,0 +1,29 @@
+name: InstallSteam
+description: this document installs SteamCMD on Windows
+schemaVersion: 1.0
+
+phases:
+  - name: install
+    steps:
+      - name: DownloadSteamCMD
+        action: WebDownload
+        timeoutSeconds: 300
+        onFailure: Abort
+        maxAttempts: 2
+        inputs:
+          - source: https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip
+            destination: C:\steamcmd.zip
+            checksum: f13c9c9e3991342cd29ef70938ba9b4940f711f253080f1de312eca88484c838494c3c77dc548c58108525983ffd83d9e36100ab41014f478adc783a8d9cfc7f
+            algorithm: SHA512
+            overwrite: true
+
+
+      - name: ExtractArchive
+        action: ExecutePowerShell
+        timeoutSeconds: 5
+        onFailure: Abort
+        maxAttempts: 2        
+        inputs:
+          commands:
+            - |
+              Expand-Archive -LiteralPath 'C:\steamcmd.zip' -DestinationPath 'c:\SteamCMD\'

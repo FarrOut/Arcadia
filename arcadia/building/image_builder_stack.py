@@ -5,7 +5,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 from arcadia.building.images.distribution_nestedstack import Distribution
-from arcadia.building.images.image_builder_pipeline_nestedstack import ImageBuilderPipeline
+from arcadia.building.images.image_builder_windows_pipeline_nestedstack import ImageBuilderWindowsPipeline
 from arcadia.building.security.authorization_nestedstack import AuthorizationNestedStack
 from arcadia.storage.build_assets_nestedstack import BuildAssetsNestedStack
 from arcadia.storage.s3_nestedstack import S3NestedStack
@@ -40,11 +40,11 @@ class ImageBuilder(Stack):
                                                       'target_account_ids'),
                                                   ).distro
 
-        ImageBuilderPipeline(self, "ImageBuilderPipeline",
-                             base_image_arn=f'arn:aws:imagebuilder:{
-                                 self.region}:aws:image/ubuntu-server-20-lts-x86/2023.9.7',
+        ImageBuilderWindowsPipeline(self, "ImageBuilderWindowsPipeline",
+                            #  base_image_arn=f'arn:aws:imagebuilder:{
+                            #      self.region}:aws:image/ubuntu-server-20-lts-x86/2023.9.7',
                                 #  amazon/ubuntu-minimal/images/hvm-ssd/ubuntu-jammy-22.04-amd64-minimal-20230921
-                             image_pipeline_name='tf2-dedicated-server',
+                             image_pipeline_name='rising-storm-2-vietnam-dedicated-server',
                              bucket_name=bucket.bucket_name,
                              version=version,
                              components_prefix=components_prefix,

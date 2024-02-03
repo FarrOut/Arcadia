@@ -23,7 +23,7 @@ class Distribution(NestedStack):
 
                                                                     ami_distribution_configuration=imagebuilder.CfnDistributionConfiguration.AmiDistributionConfigurationProperty(
                                                                         ami_tags={
-                                                                            "Application": "tf2-dedicated-server",
+                                                                            "Application": "rising-storm-2-vietnam-dedicated-server",
                                                                             "Version": version,
                                                                             "Owner": self.account,
                                                                         },
@@ -33,13 +33,13 @@ class Distribution(NestedStack):
                                                                         launch_permission_configuration=imagebuilder.CfnDistributionConfiguration.LaunchPermissionConfigurationProperty(
                                                                             organization_arns=organization_arns,
                                                                         ),
-                                                                        name="tf2-dedicated-server {{ imagebuilder:buildDate }}",
+                                                                        name="rs2-vietnam-dedicated-server {{ imagebuilder:buildDate }}",
                                                                         target_account_ids=target_account_ids,
                                                                     ),
 
                                                                 )],
-                                                                name="tf2-dedicated-server",
-                                                                description="Team Fortress 2 Dedicated Server.",
+                                                                name="rs2-vietnam-dedicated-server",
+                                                                description="Rising Storm 2 Vietnam Dedicated Server.",
 
                                                                 )
         self.distro.apply_removal_policy(removal_policy)

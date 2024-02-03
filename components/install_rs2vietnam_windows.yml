@@ -1,0 +1,16 @@
+name: InstallRisingStorm2Vietnam
+description: this document installs Rising Storm 2 Vietnam on Windows
+schemaVersion: 1.0
+
+phases:
+  - name: install
+    steps:
+      - name: DownloadGameFiles
+        action: ExecutePowerShell
+        timeoutSeconds: 1800
+        onFailure: Abort
+        maxAttempts: 2        
+        inputs:
+          commands:
+            - |
+              c:\SteamCmd\SteamCmd +login anonymous +force_install_dir c:\gameserver +app_update 418480 validate

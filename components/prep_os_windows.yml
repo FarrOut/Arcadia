@@ -1,0 +1,14 @@
+name: PrepareWindowsOS
+description: this document prepares and updates Windows OS
+schemaVersion: 1.0
+
+phases:
+  - name: update
+    steps:
+      - name: UpdateWindows
+        action: UpdateOS
+        timeoutSeconds: 300
+        onFailure: Abort
+        maxAttempts: 2
+
+
