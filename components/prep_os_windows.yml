@@ -3,12 +3,22 @@ description: this document prepares and updates Windows OS
 schemaVersion: 1.0
 
 phases:
-  - name: update
+  - name: build
     steps:
-      - name: UpdateWindows
-        action: UpdateOS
-        timeoutSeconds: 300
+      - name: MountEbsVolume
+        action: ExecutePowerShell
+        timeoutSeconds: 10
         onFailure: Abort
-        maxAttempts: 2
+        maxAttempts: 2        
+        inputs:
+          commands:
+            - |
+              Get-PSDrive -PSProvider FileSystem
+              Get-Disk | Where PartitionStyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Mounted Volume" -Confirm:$false
+              Get-PSDrive -PSProvider FileSystem
 
-
+      # - name: UpdateWindows
+      #   action: UpdateOS
+      #   timeoutSeconds: 300
+      #   onFailure: Abort
+      #   maxAttempts: 2

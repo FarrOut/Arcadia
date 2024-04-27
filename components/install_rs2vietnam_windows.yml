@@ -3,14 +3,57 @@ description: this document installs Rising Storm 2 Vietnam on Windows
 schemaVersion: 1.0
 
 phases:
-  - name: install
+  - name: build
     steps:
+      - name: DownloadDirectX
+        action: WebDownload
+        timeoutSeconds: 300
+        onFailure: Abort
+        maxAttempts: 2
+        inputs:
+          - source: https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe
+            destination: d:\directx.exe
+            checksum: 04c6347e6db6cff037a1292a88bf062c3e4042fb265a665afdbe7616aed7936f4955a35637a86c30332731762e0052b6f5c721f9fe7682d147e0965a7fb77a63
+            algorithm: SHA512
+            overwrite: true
+      - name: InstallDirectX
+        action: ExecutePowerShell
+        timeoutSeconds: 1800
+        onFailure: Abort
+        maxAttempts: 1
+        inputs:
+          commands:
+            - |
+              d:\directx.exe /Q /T:d:\directx\
+
+      - name: DownloadMsVisualC
+        action: WebDownload
+        timeoutSeconds: 300
+        onFailure: Abort
+        maxAttempts: 2
+        inputs:
+          - source: https://aka.ms/vs/17/release/vc_redist.x64.exe
+            destination: d:\vc_redist.x64.exe
+            checksum: 70a05bde549e5a973397cd77fe0c6380807cae768aa98454830f321a0de64bd0da30f31615ae6b4d9f0d244483a571e46024cf51b20fe813a6304a74bd8c0cc2
+            algorithm: SHA512
+            overwrite: true
+      - name: InstallMsVisualC
+        action: ExecutePowerShell
+        timeoutSeconds: 1800
+        onFailure: Abort
+        maxAttempts: 1
+        inputs:
+          commands:
+            - |
+              d:\vc_redist.x64.exe /install /quiet /norestart
+
+
       - name: DownloadGameFiles
         action: ExecutePowerShell
         timeoutSeconds: 1800
         onFailure: Abort
-        maxAttempts: 2        
+        maxAttempts: 1
         inputs:
           commands:
             - |
-              c:\SteamCmd\SteamCmd +login anonymous +force_install_dir c:\gameserver +app_update 418480 validate
+              d:\SteamCmd\SteamCmd +force_install_dir d:\gameserver +login anonymous +app_update 418480 validate +quit

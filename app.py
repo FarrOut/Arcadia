@@ -19,7 +19,7 @@ africa_env = Environment(account=os.getenv(
 
 app = App()
 
-version = "0.0.1"
+version = "0.0.10"
 
 peers = app.node.try_get_context("peers")
 key_name = app.node.try_get_context("key_name")
@@ -30,12 +30,12 @@ image_builder = ImageBuilder(app, "ImageBuilder",
                                     removal_policy=RemovalPolicy.DESTROY,
                                     )
 
-Server(app, "Server",
-              env=africa_env,
-              whitelisted_peer=ec2.Peer.prefix_list(peers),
-              key_name=key_name,
-              removal_policy=RemovalPolicy.DESTROY,
-              )
+# Server(app, "Server",
+#               env=africa_env,
+#               whitelisted_peer=ec2.Peer.prefix_list(peers),
+#               key_name=key_name,
+#               removal_policy=RemovalPolicy.DESTROY,
+#               )
 
 # WatchdogStack(app, "WatchdogSquad44",
 #               env=africa_env,

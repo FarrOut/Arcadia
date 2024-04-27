@@ -79,16 +79,16 @@ class ImageBuilderWindowsPipeline(NestedStack):
                                              parent_image=base_image_arn,
                                              description=f"Rising Storm 2 Vietnam Dedicated Server.",
                                              block_device_mappings=[imagebuilder.CfnImageRecipe.InstanceBlockDeviceMappingProperty(
-                                                 device_name='xvdca',
+                                                 device_name='xvdb',
                                                  ebs=imagebuilder.CfnImageRecipe.EbsInstanceBlockDeviceSpecificationProperty(
                                                      delete_on_termination=True,
                                                      encrypted=False,
-                                                     volume_size=30,
+                                                     volume_size=50,
                                                      volume_type="gp3"
                                                  ),
                                                  virtual_name="see-drive"
                                              )],
-                                             working_directory='/gameserver',
+                                            #  working_directory='c:\\gameserver',
                                              )
         recipe.apply_removal_policy(RemovalPolicy.DESTROY)
 

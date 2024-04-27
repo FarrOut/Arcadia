@@ -1,4 +1,15 @@
 
+
+Create a new windows service
+New-Service -Name "RisingStorm" -BinaryPathName '"c:\risingstorm\Binaries\Win64\VNGame.exe" VNSU-SongBe?MaxPlayers=64?EnableWebAdmin=true?WebAdminPort=8080?AdminPassword=allyourbasearebelongtous' -Description 'Rising Storm 2: Vietnam. Dedicated Server.' -DisplayName "RisingStorm" -StartupType Automatic
+
+c:\risingstorm\Binaries\Win64\VNGame.exe
+VNSU-SongBe?MaxPlayers=64?EnableWebAdmin=true?WebAdminPort=8080?AdminPassword=allyourbasearebelongtous
+
+increase serfice timeout
+New-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\' -Name 'ServicesPipeTimeout' -Value "180000" -PropertyType DWORD -Force
+
+
 # Welcome to your CDK Python project!
 
 This is a blank project for CDK development with Python.

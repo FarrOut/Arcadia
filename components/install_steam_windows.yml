@@ -3,7 +3,7 @@ description: this document installs SteamCMD on Windows
 schemaVersion: 1.0
 
 phases:
-  - name: install
+  - name: build
     steps:
       - name: DownloadSteamCMD
         action: WebDownload
@@ -12,7 +12,7 @@ phases:
         maxAttempts: 2
         inputs:
           - source: https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip
-            destination: C:\steamcmd.zip
+            destination: d:\steamcmd.zip
             checksum: f13c9c9e3991342cd29ef70938ba9b4940f711f253080f1de312eca88484c838494c3c77dc548c58108525983ffd83d9e36100ab41014f478adc783a8d9cfc7f
             algorithm: SHA512
             overwrite: true
@@ -26,4 +26,14 @@ phases:
         inputs:
           commands:
             - |
-              Expand-Archive -LiteralPath 'C:\steamcmd.zip' -DestinationPath 'c:\SteamCMD\'
+              Expand-Archive -LiteralPath 'd:\steamcmd.zip' -DestinationPath 'd:\SteamCMD\'
+
+      - name: ShowFreeDiskSpace
+        action: ExecutePowerShell
+        timeoutSeconds: 5        
+        maxAttempts: 2        
+        inputs:
+          commands:
+            - |
+              Get-Volume
+              Get-PSDrive -PSProvider FileSystem
