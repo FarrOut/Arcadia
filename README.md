@@ -1,5 +1,9 @@
 
 
+https://wiki.rs2vietnam.com/index.php?title=DedicatedServer
+
+https://steamcommunity.com/sharedfiles/filedetails/?id=940000002
+
 Create a new windows service
 New-Service -Name "RisingStorm" -BinaryPathName '"c:\risingstorm\Binaries\Win64\VNGame.exe" VNSU-SongBe?MaxPlayers=64?EnableWebAdmin=true?WebAdminPort=8080?AdminPassword=allyourbasearebelongtous' -Description 'Rising Storm 2: Vietnam. Dedicated Server.' -DisplayName "RisingStorm" -StartupType Automatic
 

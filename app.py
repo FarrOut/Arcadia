@@ -19,7 +19,7 @@ africa_env = Environment(account=os.getenv(
 
 app = App()
 
-version = "0.0.10"
+version = "0.0.1"
 
 peers = app.node.try_get_context("peers")
 key_name = app.node.try_get_context("key_name")
