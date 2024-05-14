@@ -30,12 +30,12 @@ image_builder = ImageBuilder(app, "ImageBuilder",
                                     removal_policy=RemovalPolicy.DESTROY,
                                     )
 
-# Server(app, "Server",
-#               env=africa_env,
-#               whitelisted_peer=ec2.Peer.prefix_list(peers),
-#               key_name=key_name,
-#               removal_policy=RemovalPolicy.DESTROY,
-#               )
+Server(app, "Server",
+              env=africa_env,
+              whitelisted_peer=ec2.Peer.prefix_list(peers),
+              key_name=key_name,
+              removal_policy=RemovalPolicy.DESTROY,
+              )
 
 # WatchdogStack(app, "WatchdogSquad44",
 #               env=africa_env,
