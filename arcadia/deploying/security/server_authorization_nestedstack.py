@@ -80,6 +80,9 @@ class ServerAuthorization(NestedStack):
             ec2.Port.tcp(22),
             "allow ssh access from trusted whitelist",
         )
+        self.security_group.add_ingress_rule(
+            whitelisted_peer, ec2.Port.RDP, "allow RDP"
+        )
 
         self.security_group.add_ingress_rule(
             ec2.Peer.any_ipv4(), ec2.Port.tcp(10027), "game port tcp"
@@ -105,9 +108,10 @@ class ServerAuthorization(NestedStack):
         self.security_group.add_ingress_rule(
             ec2.Peer.any_ipv4(), ec2.Port.udp(21114), "rcon udp"
         )
+
         self.security_group.add_egress_rule(
             ec2.Peer.any_ipv4(),
-            ec2.Port.tcp(443),
+            ec2.Port.HTTPS,
             "allow SSM Session Manager",
             # TODO replace any_ipv4 with specific service endpoint names
             # Verify that your instance's security group and VPC allow HTTPS (port 443) outbound traffic to the following Systems Manager endpoints :

@@ -96,21 +96,21 @@ class Server(Stack):
             value=instances.instance_public_name,
             description="Publicly-routable DNS name for this instance.",
         )
-        CfnOutput(
-            self,
-            "InstanceSSHcommand",
-            value=instances.ssh_command,
-            description="Command to SSH into instance.",
-        )
-        CfnOutput(
-            self,
-            "MoshCommand",
-            value=instances.mosh_command,
-            description="Command to SSH into instance over MOSH.",
-        )
-        CfnOutput(
-            self,
-            "MobaXtermMoshCommand",
-            value=instances.mobaxterm_mosh_command,
-            description="Command to create new SSH session over MOSH via MobaXTerm.",
-        )
+        # CfnOutput(
+        #     self,
+        #     "InstanceSSHcommand",
+        #     value=instances.ssh_command,
+        #     description="Command to SSH into instance.",
+        # )
+        # CfnOutput(
+        #     self,
+        #     "MoshCommand",
+        #     value=instances.mosh_command,
+        #     description="Command to SSH into instance over MOSH.",
+        # )
+        # CfnOutput(
+        #     self,
+        #     "MobaXtermMoshCommand",
+        #     value=instances.mobaxterm_mosh_command,
+        #     description="Command to create new SSH session over MOSH via MobaXTerm.",
+        # )

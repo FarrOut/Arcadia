@@ -72,7 +72,7 @@ class Instances(NestedStack):
             self, "InstanceLogGroup", log_group_name="InstanceLogGroup"
         )
 
-        working_dir = "/home/ubuntu/"
+        working_dir = "c:\game\\"
         handle = ec2.InitServiceRestartHandle()
         # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html
         cfn_init = ec2.CloudFormationInit.from_config_sets(
@@ -82,7 +82,7 @@ class Instances(NestedStack):
                 "logging": [],
                 "testing": [],
                 "services": ["game_server"],
-                "connectivity": ["enable_ssh"],
+                "connectivity": [],
             },
             configs={
                 "enable_ssh": ec2.InitConfig(
@@ -116,7 +116,7 @@ class Instances(NestedStack):
                 "game_server": ec2.InitConfig(
                     [
                         ec2.InitFile.from_string(
-                            file_name=f"start_server.bat",
+                            file_name=f"{working_dir}start_server.bat",
                             content=f"c:\\risingstorm\\Binaries\\Win64\\VNGame.exe VNSU-SongBe?MaxPlayers=64?EnableWebAdmin=true?WebAdminPort=8080?AdminPassword=allyourbasearebelongtous",
                         )
                     ]
@@ -213,25 +213,23 @@ class Instances(NestedStack):
             description="Publicly-routable DNS name for this instance.",
         )
 
-        user = "ubuntu"
-        self.ssh_command = (
-            "ssh"
-            + " -v"
-            + " -i "
-            + key_pair.key_pair_name
-            + ".pem "
-            + user
-            + "@"
-            + self.instance_public_name
-        )
-        CfnOutput(
-            self,
-            "InstanceSSHcommand",
-            value=self.ssh_command,
-            description="Command to SSH into instance.",
-        )
+        # user = "ubuntu"
+        # self.ssh_command = (
+        #     "ssh"
+        #     + " -v"
+        #     + " -i "
+        #     + key_pair.key_pair_name
+        #     + ".pem "
+        #     + user
+        #     + "@"
+        #     + self.instance_public_name
+        # )
+        # CfnOutput(
+        #     self,
+        #     "InstanceSSHcommand",
+        #     value=self.ssh_command,
+        #     description="Command to SSH into instance.",
+        # )
 
-        self.mosh_command = (
-            f'mosh --ssh="ssh -i {key_pair.key_pair_name}.pem" {user}@{self.instance_public_name}'
-        )
-        self.mobaxterm_mosh_command = f'mobaxterm -newtab "mosh --ssh=\\"ssh -i {key_pair.key_pair_name}.pem\\"" {user}@{self.instance_public_name}'
+        # self.mosh_command = f'mosh --ssh="ssh -i {key_pair.key_pair_name}.pem" {user}@{self.instance_public_name}'
+        # self.mobaxterm_mosh_command = f'mobaxterm -newtab "mosh --ssh=\\"ssh -i {key_pair.key_pair_name}.pem\\"" {user}@{self.instance_public_name}'
